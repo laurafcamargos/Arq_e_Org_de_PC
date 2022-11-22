@@ -1,18 +1,21 @@
 jmp main
 
-;---- Variaveis Globais -----
-Palavra: var #20	;vetor para Armazenar as letras da Palavra
-Letra: var #1		;guarda a letra que foi digitada
-Acerto: var #1		;contador de Acertos
-Erro: var #1		;contador de Erros
-chaveRandom: var #2	;usada para sortear a palavra	
-TamanhoPalavra: var #1  ;guarda o tamanho da palavra
+;---- Variáveis globais: podem ser usadas em todas as rotinas
+Palavra: var #20	        ;vetor para armazenar as letras da palavra
+Tecla: var #1		        ;guarda a letra que foi digitada
+Acerto: var #1		        ;contador de Acertos
+Erro: var #1		        ;contador de Erros
+chaveRandom: var #2	     ;usada para sortear a palavra	
+TamanhoPalavra: var #1    ;guarda o tamanho da palavra
 posLetra: var #1          ;guarda a posicao da letra 
 PalavraDigitada: var #20  ;guarda a palavra inputada
-posCursor: var #2         ;guarda a posicao do cursos
-contadorVerdes: var #1    ;contador de letras verdes
+posCursor: var #1         ;guarda a posicao do cursor
+contadorVerdes: var #1    ;contador de letras verdes  
+Contador: var #1          ;contador de tentativas durante a rodada
+Catalogo : var #1566      ;armazena o endereço das 783 palavras
+catTamanhos: var #783     ;armazena o tamanho das 783 palavras do catalogo (sempre 5)
 
-;----Catálogo com as palavras do jogo
+;----Catálogo com as 783 palavras do jogo
 word0: string "abrir"
 word1: string "abriu"
 word2: string "abuso"
@@ -46,7 +49,7 @@ word29: string "ameno"
 word30: string "amiga"
 word31: string "amigo"
 word32: string "amplo"
-word33: string "anais"
+word33: string "alias"
 word34: string "andar"
 word35: string "anelo"
 word36: string "anexo"
@@ -202,7 +205,7 @@ word185: string "conto"
 word186: string "coral"
 word187: string "corar"
 word188: string "corja"
-word189: string "corno"
+word189: string "canoa"
 word190: string "coroa"
 word191: string "corpo"
 word192: string "corso"
@@ -244,20 +247,20 @@ word227: string "dizer"
 word228: string "dogma"
 word229: string "doido"
 word230: string "dorso"
-word231: string "douto"
+word231: string "dedos"
 word232: string "drama"
-word233: string "drops"
+word233: string "droga"
 word234: string "ecoar"
 word235: string "elite"
 word236: string "enfim"
 word237: string "enjoo"
 word238: string "entre"
 word239: string "ereto"
-word240: string "escol"
-word241: string "esgar"
+word240: string "dente"
+word241: string "emoji"
 word242: string "estar"
-word243: string "estio"
-word244: string "estro"
+word243: string "envio"
+word244: string "entao"
 word245: string "etapa"
 word246: string "etnia"
 word247: string "exame"
@@ -299,8 +302,8 @@ word282: string "ficar"
 word283: string "ficha"
 word284: string "filho"
 word285: string "final"
-word286: string "finda"
-word287: string "findo"
+word286: string "facil"
+word287: string "futil"
 word288: string "finjo"
 word289: string "firma"
 word290: string "firme"
@@ -309,7 +312,7 @@ word292: string "fixar"
 word293: string "flora"
 word294: string "fluir"
 word295: string "fluxo"
-word296: string "foder"
+word296: string "fusao"
 word297: string "folga"
 word298: string "folha"
 word299: string "folia"
@@ -320,7 +323,7 @@ word303: string "forro"
 word304: string "forte"
 word305: string "fossa"
 word306: string "fosse"
-word307: string "fosso"
+word307: string "filha"
 word308: string "fraco"
 word309: string "frase"
 word310: string "frota"
@@ -330,26 +333,26 @@ word313: string "fugaz"
 word314: string "fugir"
 word315: string "fugiu"
 word316: string "fundo"
-word317: string "furor"
+word317: string "furto"
 word318: string "gabar"
-word319: string "garbo"
-word320: string "gemer"
+word319: string "graca"
+word320: string "genio"
 word321: string "genro"
 word322: string "gente"
 word323: string "geral"
 word324: string "gerar"
 word325: string "gerir"
 word326: string "gesto"
-word327: string "gleba"
-word328: string "glosa"
+word327: string "garra"
+word328: string "globo"
 word329: string "golpe"
 word330: string "gosto"
-word331: string "gozar"
+word331: string "gasto"
 word332: string "grama"
 word333: string "grata"
 word334: string "grato"
 word335: string "grave"
-word336: string "grota"
+word336: string "gotas"
 word337: string "grupo"
 word338: string "gueto"
 word339: string "guisa"
@@ -363,7 +366,7 @@ word346: string "homem"
 word347: string "honra"
 word348: string "horda"
 word349: string "horto"
-word350: string "hoste"
+word350: string "hiena"
 word351: string "houve"
 word352: string "humor"
 word353: string "ideal"
@@ -378,23 +381,23 @@ word361: string "inato"
 word362: string "inter"
 word363: string "irado"
 word364: string "itens"
-word365: string "jazer"
-word366: string "jazia"
+word365: string "jegue"
+word366: string "jeans"
 word367: string "jeito"
 word368: string "jejum"
-word369: string "jirau"
+word369: string "jarra"
 word370: string "jogar"
 word371: string "jovem"
 word372: string "judeu"
-word373: string "junco"
+word373: string "jaula"
 word374: string "junto"
 word375: string "justa"
 word376: string "justo"
-word377: string "labor"
+word377: string "lapis"
 word378: string "laico"
 word379: string "lapso"
 word380: string "largo"
-word381: string "lasso"
+word381: string "lunar"
 word382: string "laudo"
 word383: string "lavra"
 word384: string "lazer"
@@ -404,12 +407,12 @@ word387: string "leite"
 word388: string "leito"
 word389: string "lenda"
 word390: string "lento"
-word391: string "lesse"
-word392: string "lesto"
+word391: string "latim"
+word392: string "lider"
 word393: string "letal"
 word394: string "letra"
 word395: string "levar"
-word396: string "liame"
+word396: string "lotus"
 word397: string "lidar"
 word398: string "ligar"
 word399: string "light"
@@ -421,8 +424,8 @@ word404: string "linha"
 word405: string "livre"
 word406: string "livro"
 word407: string "local"
-word408: string "locus"
-word409: string "logia"
+word408: string "lesao"
+word409: string "lenta"
 word410: string "logos"
 word411: string "logro"
 word412: string "longe"
@@ -450,8 +453,8 @@ word433: string "marca"
 word434: string "marco"
 word435: string "massa"
 word436: string "matar"
-word437: string "matiz"
-word438: string "meche"
+word437: string "menta"
+word438: string "mumia"
 word439: string "medir"
 word440: string "meiga"
 word441: string "meigo"
@@ -460,14 +463,14 @@ word443: string "mente"
 word444: string "meses"
 word445: string "mesma"
 word446: string "mesmo"
-word447: string "messe"
+word447: string "moeda"
 word448: string "mexer"
 word449: string "mimar"
 word450: string "mimos"
 word451: string "minar"
 word452: string "minha"
 word453: string "misto"
-word454: string "mocho"
+word454: string "melao"
 word455: string "molde"
 word456: string "molho"
 word457: string "monge"
@@ -475,10 +478,10 @@ word458: string "monta"
 word459: string "monte"
 word460: string "moral"
 word461: string "morar"
-word462: string "morfo"
+word462: string "morto"
 word463: string "morro"
 word464: string "morte"
-word465: string "mosto"
+word465: string "midia"
 word466: string "motim"
 word467: string "mover"
 word468: string "mudar"
@@ -510,8 +513,8 @@ word493: string "ontem"
 word494: string "opaco"
 word495: string "optar"
 word496: string "ordem"
-word497: string "orgia"
-word498: string "ornar"
+word497: string "olhos"
+word498: string "orixa"
 word499: string "ousar"
 word500: string "outro"
 word501: string "ouvir"
@@ -521,26 +524,26 @@ word504: string "paira"
 word505: string "pajem"
 word506: string "papel"
 word507: string "parar"
-word508: string "parca"
-word509: string "parco"
+word508: string "prata"
+word509: string "pista"
 word510: string "pardo"
 word511: string "parte"
-word512: string "parva"
-word513: string "parvo"
-word514: string "pasma"
+word512: string "porem"
+word513: string "ponta"
+word514: string "porco"
 word515: string "pasmo"
 word516: string "passa"
 word517: string "passe"
 word518: string "passo"
 word519: string "pauta"
 word520: string "pavor"
-word521: string "pecha"
+word521: string "pluma"
 word522: string "pedir"
 word523: string "pedra"
-word524: string "pedro"
+word524: string "pinta"
 word525: string "pegar"
 word526: string "peita"
-word527: string "peito"
+word527: string "pombo"
 word528: string "peixe"
 word529: string "penca"
 word530: string "penso"
@@ -551,17 +554,17 @@ word534: string "perto"
 word535: string "pesar"
 word536: string "peste"
 word537: string "piada"
-word538: string "piche"
+word538: string "pirar"
 word539: string "pilar"
 word540: string "pinho"
 word541: string "pique"
 word542: string "pisar"
-word543: string "plaga"
+word543: string "placa"
 word544: string "plano"
 word545: string "plebe"
 word546: string "plena"
 word547: string "pleno"
-word548: string "plumo"
+word548: string "pluto"
 word549: string "pobre"
 word550: string "podar"
 word551: string "poder"
@@ -798,8 +801,7 @@ word781: string "vosso"
 word782: string "vulgo"
 word783: string "vulto"
 
-; --Catalogo de referencias para as palavras
-Catalogo : var #1566
+; --Catalogo com as referencias para as palavras
 static Catalogo + #0, #word0
 static Catalogo + #2, #word1
 static Catalogo + #4, #word2
@@ -1585,9 +1587,7 @@ static Catalogo + #1562, #word781
 static Catalogo + #1564, #word782
 static Catalogo + #1566, #word783
 
-;---Catalogo com o tamanho das respectivas palavras do catalogo
-catTamanhos: var #783
-;Tamanho do catalogo de tamanho = quantidade de palavras no catalogo original
+;Tamanho desse catalogo = quantidade de palavras no catalogo original
 static catTamanhos + #0, #5
 static catTamanhos + #1, #5
 static catTamanhos + #2, #5
@@ -2376,23 +2376,24 @@ static catTamanhos + #783, #5
 ;--- MSGS PRINTADAS DURANTE O JOGO-------
 Msn0: string "V O C E   V E N C E U !!!"
 Msn1: string "Quer jogar novamente? <s/n>"
-Msn6: string "V O C E   P E R D E U !!!"
+Msn2: string "V O C E   P E R D E U !!!"
+Msn3: string "A palavra da rodada era: "
+Msn4: string "TENTATIVA"
 ;------------------------------
-;Menu do jogo:
+;Menu principal do jogo:
 main:
-
 	call ApagaTela
 	call ImprimeTela ;tela do menu 
 
 	main_loop:	
-	call InputLetra 
+	call InputTecla 
 	loadn r0, #13 ;no caso da tecla enter ser inputada
-	load r1, Letra
+	load r1, Tecla
 	cmp r0, r1	
 	jeq jogo ;go to para a função do jogo 
 
    loadn r0, #'1' ;no caso da tecla 1 ser inputada
-   load r1, Letra
+   load r1, Tecla
 	cmp r0,r1
    jeq Instrucaotela ;go to para a tela das intruções
    
@@ -2413,41 +2414,37 @@ jogo:
    call ApagaTela
    call SorteiaPalavra 
    
-   ;--calcula a posicao e numero de tentativas ideais com base na palavra sorteada
-   loadn r2, #0
-	loadn r3, #40		;tamanho da Linha
-	loadn r4, #4 		; Maximo de tentativas por padrao
+   ;--calcula a posicao com base na palavra sorteada
+   
+	loadn r3, #40		;tamanho da linha da tela
+	loadn r4, #8		;maximo de tentativas por padrao
 	load r0, TamanhoPalavra
-	loadn r3, #3
-	div r3, r0, r3
-	add r4, r4, r3 		; Adiciona algumas tentativas se a palavra for grande
-	loadn r1, #5
-	loadn r2, #412			; Ponto central da tela	
-	div r0, r0, r1
-	sub r2, r2, r0			; Deslocando a palavra pra esquerda de acordo com o tamanho
-	store posCursor, r2
+	loadn r2, #376			;traços no ponto central da tela	
+	store posCursor, r2  ;desloca o cursor na tela a cada palavra
 
-	loadn r1, #0 		; Guarda o numero da tentativa
-	loadn r3, #40 		; Tamanho da linha da tela
-	
+	loadn r1, #0 		;guarda o numero da tentativa
+	loadn r3, #40 		;tamanho da linha da tela
+   
 	Loop:
 		loadn r5, #0
-		store contadorVerdes, r5;contador é zerado a cada tentativa
+		store contadorVerdes, r5 ;contador é zerado a cada tentativa
+      
+      call PrintaTentativa
 		call DesenhaTracos
 		call InputPalavra
 		call ChecaPalavra 
 		call Compara
 		call TestaFim
-      inc r1  ;conta as tentivas
+      inc r1            ;tentativas++
+      store Contador,r1 ;salva na variável pra usar dps 
+
 		add r2, r2, r3		;passa pra proxima linha
 		store posCursor, r2
 
 		cmp r1, r4 		;caso nao tenha excedido o numero de tentativas, continua
-
 		jne Loop
 	
-main_Fim:
-
+jogoFim:
 	halt
 ;***********************************************************************
 ; COMPARA A PALAVRA DIGITADA PELO JOGADOR COM A CORRETA LETRA POR LETRA
@@ -2459,15 +2456,15 @@ ChecaPalavra:
 	push r3
 	push r4
 
-	loadn r1, #PalavraDigitada ;Endereco de inicio da palavra
+	loadn r1, #PalavraDigitada ;endereco de inicio da palavra
 	load r2, TamanhoPalavra
-	loadn r3, #0 ;Contador de letras
+	loadn r3, #0 ;contador de letras
 
 	checaPalavra_Loop:
 		store posLetra, r3
 		add r4, r1, r3		;pega o endereco exato da letra a ser lida
 		loadi r0, r4		;r0 = memoria[r4]
-		store Letra, r0
+		store Tecla, r0
 		call ChecaLetra
 		inc r3
 		cmp r3, r2 	;se tiver acabado a palavra, sai
@@ -2491,13 +2488,13 @@ ChecaLetra: ; r0 =letra a ser checada com todas as outras
 	push r4
 	push r5
 	push r6
-   	push r7
+   push r7
 
 	load r1, Palavra 	;endereco da palavra
 	load r2, TamanhoPalavra	
 	loadn r3, #0 		;contador
 	loadn r5, #2304 ;letras que não estão na palavra(de vermelho)		
-   	load r7, contadorVerdes
+   load r7, contadorVerdes
 
 	checaLetra_Loop:
 		add r4, r1, r3 		
@@ -2516,7 +2513,7 @@ ChecaLetra: ; r0 =letra a ser checada com todas as outras
 		load r6, posLetra
 		cmp r6, r3 			
 		jne letraAmarela  ;caso a letra esteja presente mas no lugar errado
-      	inc r7
+      inc r7
 		loadn r5, #512 	;caso a letra esteja presente e no lugar certo- cor verde
 		jmp checaLetra_Sai
 
@@ -2547,7 +2544,7 @@ ChecaLetra: ; r0 =letra a ser checada com todas as outras
 		rts
 
 ;********************************************************
-;                   INPUT UMA PALAVRA
+;          SALVA A PALAVRA DIGITADA PELO USUÁRIO
 ;********************************************************
 InputPalavra:
 	push r0
@@ -2559,19 +2556,19 @@ InputPalavra:
 	push r6
 
 	
-	loadn r1, #PalavraDigitada 	; Endereco reservado pra palavra a ser digitada
-	load r2, TamanhoPalavra
-	load r3, posCursor			; Aponta o inicio da linha para escrever
-	loadn r4, #0 				; Contador de letras
+	loadn r1, #PalavraDigitada 	;endereco reservado pra palavra a ser digitada
+	load r2, TamanhoPalavra       
+	load r3, posCursor			   ;aponta o inicio da linha para escrever
+	loadn r4, #0 				      ;contador de letras
 
 	inputPalavra_Loop:
-		call InputLetra
-		load r0, Letra
+		call InputTecla
+		load r0, Tecla
 		loadn r6, #13
 		cmp r0, r6
-		jeq main_Fim
-		add r5, r1, r4 		; r5 =posicao da letra a ser inserida na memoria
-		storei r5, r0 			; Mem[r5] = r0
+		jeq jogoFim
+		add r5, r1, r4 		;r5 =posicao da letra a ser inserida na memoria
+		storei r5, r0 			;memoria[r5] = r0
 
 		outchar r0, r3
 		inc r3
@@ -2604,8 +2601,9 @@ DesenhaTracos:	;r0 =numero da linha que vai iniciar
 
 	load r1, TamanhoPalavra
 	loadn r4, #0 			;contador de Letras
+   store Contador,r4
 	load r2, posCursor
-
+   
 	DesenhaTracos_Loop:
 		loadn r3, #3551	;underline rosa = caracter '_'(223) + (3328)rosa = 3551
 		outchar r3, r2
@@ -2630,19 +2628,20 @@ SorteiaPalavra:
 	push r2
 	push r3
 	push r4
+   push r5
 
 	load r1, chaveRandom ;seleciona um numero entre 0 e o tamanho do catalogo
 	rotl r1, #4		 	   ;faz um rotate pra tentar deixar random
-	loadn r2, #783 			;numero de palavras no catalogo (ATUALIZAR CASO ADICIONE MAIS)
+	loadn r2, #783 		;numero de palavras no catalogo (ATUALIZAR CASO ADICIONE MAIS)
 	mod r2, r1, r2 		;r1 = chaveRandom % r2=numCatalogo (um numero random)
 
-	loadn r3, #2 			;tamanho de um endereco de memoria
+	loadn r3, #2         ;tamanho de um endereco de memoria 			
 	loadn r4, #Catalogo	;endereco do inicio do catalogo de palavras
 	mul r3, r3, r2       
 	add r4, r4, r3			;pula algumas palavras
 	loadi r4, r4
 
-	store Palavra, r4	;guarda palavra a ser usada
+	store Palavra, r4	   ;guarda palavra a ser usada
 
 	;salva o tamanho da palavra
 	loadn r4, #catTamanhos
@@ -2650,7 +2649,7 @@ SorteiaPalavra:
 	loadi r4, r4
 
 	store TamanhoPalavra, r4
-	
+   pop r5
 	pop r4
 	pop r3
 	pop r2
@@ -2659,7 +2658,7 @@ SorteiaPalavra:
 	rts
 
 ;********************************************************
-;                       IMPRIME TELA
+;              IMPRIME A TELA DO MENU
 ;********************************************************	
 
 ImprimeTela: 	
@@ -2690,30 +2689,30 @@ ImprimeTela_Loop:
 ;********************************************************
 ;                       IMPRIME STRING
 ;********************************************************
-ImprimeStr:	;  Rotina de Impresao de Mensagens:    
-            ;  r0 = Posicao da tela que o primeiro caractere da mensagem será impresso  
-            ;  r1 = endereco onde comeca a mensagem
-            ;  r2 = cor da mensagem. A mensagem será impressa até encontrar "/0"
-	push r0	; protege o r0 na pilha para preservar seu valor
-	push r1	; protege o r1 na pilha para preservar seu valor
-	push r2	; protege o r1 na pilha para preservar seu valor
-	push r3	; protege o r3 na pilha para ser usado na subrotina
-	push r4	; protege o r4 na pilha para ser usado na subrotina
+ImprimeStr:	    
+            ;r0 = Posicao da tela que o primeiro caractere da mensagem será impresso  
+            ;r1 = endereco onde comeca a mensagem
+            ;r2 = cor da mensagem. 
+	push r0	;protege o r0 na pilha para preservar seu valor
+	push r1	;protege o r1 na pilha para preservar seu valor
+	push r2	;protege o r1 na pilha para preservar seu valor
+	push r3	;protege o r3 na pilha para ser usado na subrotina
+	push r4	;protege o r4 na pilha para ser usado na subrotina
 	
-	loadn r3, #'\0'	; Criterio de parada
+	loadn r3, #'\0'	;A mensagem será impressa até encontrar "\0"
 
    ImprimeStr_Loop:	
 		loadi r4, r1
-		cmp r4, r3		; if (char == \0) para
-		jeq ImprimeStr_Sai
-		add r4, r2, r4	; soma a cor
-		outchar r4, r0	; Imprime o caractere na tela
-		inc r0			; Incrementa a posicao na tela
-		inc r1			; Incrementa o ponteiro da String
+		cmp r4, r3		      ; if(char == \0) 
+		jeq ImprimeStr_Sai   ;sai do loop
+		add r4, r2, r4	      ;soma a cor
+		outchar r4, r0	      ;imprime o caractere na tela
+		inc r0			      ;incrementa a posicao na tela
+		inc r1			      ;incrementa o ponteiro da string
 		jmp ImprimeStr_Loop
 	
    ImprimeStr_Sai:	
-	pop r4	;Resgata os valores dos registradores utilizados na Subrotina da Pilha
+	pop r4	;resgata os valores dos registradores utilizados na ubrotina da Pilha
 	pop r3
 	pop r2
 	pop r1
@@ -2739,24 +2738,24 @@ ApagaTela:
 	pop r0
 	rts	
 ;********************************************************
-;               PEGA UMA LETRA INPUTADA
+;  SALVA ALGUMA TECLA INPUTADA NA VARIÁVEL "TECLA" 
 ;********************************************************
-InputLetra:	   ;Espera que uma tecla seja digitada e salva na variavel global "Letra"
-   push fr		;Protege o registrador de flags
+InputTecla:	   
+   push fr		;protege o registrador de flags
 	push r0
 	push r1
 	push r2
 	loadn r1, #255	;se nao inputar nada vem 255
 	loadn r2, #0	;logo que programa a FPGA o inchar vem 0
    
-   InputLetra_Loop:
+   InputTecla_Loop:
 		inchar r0			   ;lê do teclado, se nada for digitado = 255
 		cmp r0, r1			   ;compara r0 com 255
-		jeq InputLetra_Loop	;fica lendo até que digite uma tecla válida
+		jeq InputTecla_Loop	;fica lendo até que digite uma tecla válida
 		cmp r0, r2			   ;compara r0 com 0
-		jeq InputLetra_Loop	;lê novamente pois logo que programa a FPGA o inchar vem 0
+		jeq InputTecla_Loop	;lê novamente pois logo que programa a FPGA o inchar vem 0
 
-	   store Letra, r0	   ;salva a tecla na variavel global "Letra"
+	   store Tecla, r0	   ;salva a tecla na variavel global "Tecla"
 	
 	pop r2
 	pop r1
@@ -2767,23 +2766,22 @@ InputLetra:	   ;Espera que uma tecla seja digitada e salva na variavel global "L
 ;********************************************************
 ;               IMPRIME O MENU DE INSTRUCAO
 ;********************************************************
-ImprimeTela2: 	;função de impressão do cenário na tela
-		         ;r1 = endereco onde comeca a primeira linha do cenário
-		         ;r2 = cor do cenario a ser impresso
+ImprimeTela2: 	
+		                
   push R0
   push R1
   push R2
   push R3
 
   loadn R0, #tela2
-  loadn R1, #0
-  loadn R2, #1200
+  loadn R1, #0    ;r1 = endereco onde comeca a primeira linha do cenário
+  loadn R2, #1200 ;r2 = até onde termina o cenário
 
 ImprimeTela2_Loop:
 
-	add R3,R0,R1
+	add R3,R0,R1   ;soma da tela com a posição
    loadi R3, R3
-   outchar R3, R1
+   outchar R3, R1  ;o que é printado e onde
    inc R1
    cmp R1, R2
    jne ImprimeTela2_Loop
@@ -2804,7 +2802,7 @@ ImprimeTela3:
   push R3
 
   loadn R0, #tela3
-  loadn R1, #0 ;onde começa
+  loadn R1, #0    ;onde começa
   loadn R2, #1200 ;onde termina
 
 ImprimeTela3_Loop:
@@ -2829,127 +2827,119 @@ Instrucaotela:
       call ImprimeTela2
 
    Instrucaotela_Loop:
-      call InputLetra
+      call InputTecla
 		loadn r0, #'0'
-		load r1, Letra
+		load r1, Tecla
 		cmp r0, r1			
 		jne Instrucaotela_Loop ;fica no loop se a tecla for diferente de 0
-      jmp main ;go to menu quando inputa 0 
+      jmp main               ;go to menu quando inputa 0 
 
 ;********************************************************
-;                       COMPARA
+;     CONFERE SE A LETRA DIGITADA PERTENCE A PALAVRA
 ;********************************************************	
-Compara:	; Rotina que compara a letra digitada para ver se ela prertence a palavra
-	push fr		; Protege o registrador de flags
-	push r0	; Flag  Acertou a Letra
-	push r1	; i = 0
-	push r2	; TamanhoPalavra
-	push r3	; Letra
-	push r4	; #Palavra
-	push r5	; palavra + i
-	push r6	; Posicao na Tela onde a letra da palavra vai ser escrita
-	push r7	; Aux: Pos na tela e palavra[i]
+Compara:	   
 
-	loadn r0, #0	; Flag  Acertou a Letra = 0
-	loadn r1, #0	; i = 0
+	push fr	;Protege o registrador de flags
+	push r0	;acertou a letra?
+	push r1	;i = 0
+	push r2	;TamanhoPalavra
+	push r3	;Letra
+	push r4	;#Palavra
+	push r5	;palavra + i
+	push r6	;Posicao na tela onde a letra da palavra vai ser escrita
+	push r7	;Aux: Pos na tela e palavra[i]
+
+	loadn r0, #0	;acertou = 0
+	loadn r1, #0	;i = 0
 	load r2, TamanhoPalavra
-	load r3, Letra
+	load r3, Tecla
 	loadn r4, #Palavra
-	;r5 = palavra + i	
-	;loadn r6, #481	; -- Posicao na Tela onde a letra da palavra vai ser escrita
 
-   Compara_Loop:	; While ( i < TamanhoPalavra )
-		; Testa se ja' testou todas as letras da palavra
-		cmp r1, r2	; i < TamanhoPalavra ?
+   Compara_Loop:	;enquanto ( i < TamanhoPalavra )
+		;verifica se já testou todas as letras da palavra
+		cmp r1, r2	;i < TamanhoPalavra?
 		jeq Compara_Fim
 		
-		; Testa se a Letra digitada pertence a palavra na posicao i
-		add r5, r4, r1	; r5 = palavra + i
-		loadi r7, r5	; r7 = palavra[i]
-		cmp r3, r7	; Letra == palavra[i] ?
+		;verifica se a letra digitada pertence a palavra na posicao i
+		add r5, r4, r1	;r5 = palavra + i
+		loadi r7, r5	;r7 = palavra[i]
+		cmp r3, r7	;Letra == palavra[i] ?
 		jne Compara_NaoPertence
 		
-		add r7, r6, r1	; r7 = pos na tela : r7 = posicao inicial + i
-		outchar r3, r7	; imprime Letra na tela no _ correspondente
+		add r7, r6, r1	;r7 = pos na tela : r7 = posicao inicial + i
+		outchar r3, r7	;imprime Letra na tela no traço correspondente
 		
-		load r7, Acerto	; Incrementa o contador de acertos
-		inc r7		; Acerto++
-		store Acerto, r7
+		load r7, Acerto
+		inc r7		;incrementa o contador de acertos
+		store Acerto, r7 ;atualiza o numero de acertos
 		
-		inc r1; i++
-		loadn r0, #1	; Flag  Acertou a Letra = 1
+		inc r1         ; i++
+		loadn r0, #1	;acertou = 1
 		jmp Compara_Loop
 
    Compara_NaoPertence:
-	; Se nao Achou a Letra, incrementa o i e volta pro Loop
-	inc r1		; i++
+	;se nao achou a Letra, incrementa o i e volta pro Loop
+	inc r1		      ; i++
 	jmp Compara_Loop
 
    Compara_Fim:
-	; Se terminou de testar a letra digitada com todas as letras da palavra
-	
-	; Testa se ouve um acerto
+	;verifica se terminou de testar a letra digitada com todas as letras da palavra
+	;verifica se houve um acerto
 	loadn r7, #1
-	cmp r0, r7	; Flag  Acertou a Letra == 1 ?
-	jeq Compara_FimSwitch	; Se SIM, sai da rotina!
-	
-	; Se NAO, incrementa o ERRO e desenha as partes do boneco
-	load r7, Erro	; Se nao acertou, incrementa o contador de Erro!
-	inc r7			; Erro++
-	store Erro, r7
+	cmp r0, r7	;acertou == 1 ?
+	jeq Compara_FimSwitch	;se sim, sai da comparação
+	load r7, Erro	         ;se nao, incrementa o contador de erro
+	inc r7			         ;erro++
+	store Erro, r7          ;atualiza o numero de erros
    
-   ; Switch Erro (r7)
-   ; Case 1
+   ;Switch erro (r7)
+   ;Case 1:
 	loadn r0, #1
-	cmp r7, r0	; Se erro = 1
+	cmp r7, r0	   ;erro = 1
 	jne Compara_Case2
-	jmp Compara_FimSwitch	; Break do Switch
+	jmp Compara_FimSwitch	;break
 
    Compara_Case2:
-	loadn r0, #2	; Se erro = 2
+	loadn r0, #2	;erro = 2
 	cmp r7, r0
 	jne Compara_Case3
-	jmp Compara_FimSwitch	; Break do Switch
+	jmp Compara_FimSwitch	;break
 
    Compara_Case3:
-	loadn r0, #3	; Se erro = 3
+	loadn r0, #3	;erro = 3
 	cmp r7, r0
 	jne Compara_Case4
-	jmp Compara_FimSwitch	; Break do Switch
+	jmp Compara_FimSwitch	;break 
 	
    Compara_Case4:
-	loadn r0, #4	; Se erro = 4
+	loadn r0, #4	;erro = 4
 	cmp r7, r0
 	jne Compara_Case5
-	jmp Compara_FimSwitch	; Break do Switch
+	jmp Compara_FimSwitch	;break 
 
    Compara_Case5:
-	loadn r0, #5	; Se erro = 5
+	loadn r0, #5	;erro = 5
 	cmp r7, r0
 	jne Compara_Case6
-	jmp Compara_FimSwitch	; Break do Switch
+	jmp Compara_FimSwitch	;break 
 
    Compara_Case6:
-	loadn r0, #6	; Se erro = 6
+	loadn r0, #6	;erro = 6
 	cmp r7, r0
 	jne Compara_Case7
-	jmp Compara_FimSwitch	; Break do Switch	
+	jmp Compara_FimSwitch	;break 	
 
    Compara_Case7:
-	loadn r0, #7	; Se erro = 7
+	loadn r0, #7	;erro = 7
 	cmp r7, r0
 	jne Compara_Case8
-	jmp Compara_FimSwitch	; Break do Switch	
+	jmp Compara_FimSwitch	;break 	
 
 
-   Compara_Case8:	; Game Over!!
-	loadn r0, #8	; Se erro = 8
+   Compara_Case8:	
+	loadn r0, #8	;erro = 8
 	cmp r7, r0
-	jne Compara_FimSwitch
-	; Era pra abrir o Alcapao e enforcar o Carinha, 
-	; mas resolvi imprimir uma Tela completa na rotina Testa Fim!!
-	; Entao aqui nao faz nada!!
-
+	jne Compara_FimSwitch ;jogo acabou
 
    Compara_FimSwitch:
 	pop r7
@@ -2964,54 +2954,50 @@ Compara:	; Rotina que compara a letra digitada para ver se ela prertence a palav
 	rts	
 ;----------------
 ;********************************************************
-;                       TESTA FIM
+;         VERIFICA SE O JOGO TERMINOU
 ;********************************************************	
-TestaFim:	; Rotina que testa se o jogo terminou
-		      ; Se acertou todas as letras da palavra 
-	push fr	; Protege o registrador de flags
-	push r0	; Posicao na Tela
-	push r1	; Ponteiro para as mensagens
-	push r2	; Cor das mensagens
-	push r3	; Contador de Acertos
-	push r4	; Tamanho da Palavra
-	push r5	; Contador de Erro
-	push r6	; Numero maximo de erros
-	
+TestaFim:	 
+	push fr	;Protege o registrador de flags
+	push r0	;Posicao na Tela
+	push r1	;Ponteiro para as mensagens
+	push r2	;Cor das mensagens
+	push r3	;Contador de Acertos
+	push r4	;Tamanho da Palavra
+	push r5	;Contador de Erro
+	push r6	;Numero maximo de erros
+   
+   load r3, Acerto
+   load r4, TamanhoPalavra
 	load r5, Erro
-	loadn r6, #5	; Numero maximo de erros = 5
-	load r3, Acerto
-	load r4, TamanhoPalavra
+	loadn r6, #8	;numero maximo de tentativas = 8
 	
-	cmp r5, r6	; Erro = 5
-	jeq TestaFim_Perdeu	
+	
+	cmp r5, r6	         ;erro = 8?
+	jeq TestaFim_Perdeu	;se sim, game over
 	
 	load r3, contadorVerdes
-	cmp r3, r4	;Acerto = TamanhoPalavra ?
-	jne TestaFim_Sai	;se nao, go digitar outra Letra           
-   loadn r0, #808    
-	loadn r1, #Msn0 ;se sim, imprime voce venceu
+	cmp r3, r4	      ;acerto = TamanhoPalavra ?
+	jne TestaFim_Sai	;se nao, go digitar outra Letra , se sim, continua na função          
+   loadn r0, #808    ;posicao que imprime na tela
+	loadn r1, #Msn0   ;imprime voce venceu
 	loadn r2, #512
 	call ImprimeStr
 
    TestaFim_JogarNovamente:	
-	;imprime quer jogar novamente
-	loadn r0, #1006
-	loadn r1, #Msn1
+	loadn r0, #1086
+	loadn r1, #Msn1   ;imprime quer jogar novamente
 	loadn r2, #3328
 	call ImprimeStr
-	
-	call InputLetra
-	loadn r3, #'n'
-	load r4, Letra
-	cmp r3, r4		;tecla == 'n'?
-	jeq TestaFim_FimJogo	;go to fim do jogo
-
+	call InputTecla   ;usuário digita uma tecla
+	loadn r3, #'n'    
+	load r4, Tecla
+	cmp r3, r4		   ;tecla == 'n'?
+	jeq TestaFim_FimJogo	  ;se tecla == 'n', go to fim do jogo
    loadn r3, #'s'
-	load r4, Letra
-	cmp r3, r4		;tecla == 's'?
-	jne TestaFim_JogarNovamente; tecla nao e' 's'
+	load r4, Tecla
+	cmp r3, r4		   ;tecla == 's'?
+	jne TestaFim_JogarNovamente ;se tecla == 's', restart
 	
-	; Se quiser jogar novamente...
 	call ApagaTela
 	pop r6	
 	pop r5	
@@ -3021,17 +3007,24 @@ TestaFim:	; Rotina que testa se o jogo terminou
 	pop r1
 	pop r0
 	pop fr
-	
-	pop r0	;Da um Pop a mais para acertar o ponteiro da pilha, pois nao vai dar o RTS !!
+	pop r0	;da um Pop a mais para acertar o ponteiro da pilha, pois nao vai dar o rts 
 	jmp main
 
 TestaFim_Perdeu:
-   call ApagaTela
-	
-	;imprime voce perdeu !!
-	loadn r0, #608
-	loadn r1, #Msn6
-	loadn r2, #2304
+
+	loadn r0, #808    ;posicao
+	loadn r1, #Msn2   ;imprime voce perdeu 
+	loadn r2, #2304   ;cor
+	call ImprimeStr
+
+   loadn r0, #964
+	loadn r1, #Msn3   ;imprime "A palavra da rodada era:"
+	loadn r2, #0
+	call ImprimeStr
+
+   loadn r0, #988
+	load r1, Palavra  ;imprime a palavra escolhida da rodada
+	loadn r2, #512
 	call ImprimeStr
 	jmp TestaFim_JogarNovamente
 
@@ -3058,15 +3051,15 @@ GeradorPalavra:
 	push r1
 	push r2
 
-	loadn r0, #255	;Se nao digitar nada, tem um espaco
-	loadn r1, #32 	;Codigo ASCII do Enter
-	loadn r2, #0 	;Inicia Contador em zero
+	loadn r0, #255	;se nao digitar nada, tem um espaco
+	loadn r1, #32 	;codigo ASCII do espaço
+	loadn r2, #0 	;inicia contador em zero
 
-	espera_loop:
+	GeradorPalavra_loop:
 		inchar r0
 		inc r2
 		cmp r0, r1
-		jne espera_loop
+		jne GeradorPalavra_loop
 
 	store chaveRandom, r2
 
@@ -3074,11 +3067,177 @@ GeradorPalavra:
 	pop r1
 	pop r0
 	rts
-;----------------
+;********************************************************
+;    PRINTA E INCREMENTA AS TENTATIVAS DURANTE A RODADA
+;********************************************************
+PrintaTentativa:
+
+	push r0
+	push r1
+	push r2
+	push r3
+   push r4
+   
+    loadn r3, #0 ;compara
+    load r4, Contador ;numeros de tentativas	
+    cmp r3,r4
+    jeq PrintaTentativa1
+
+    loadn r3, #1 ;compara
+    load r4, Contador ;numeros de tentativas	
+    cmp r3,r4
+    jeq PrintaTentativa2
+      
+    loadn r3, #2 ;compara
+    load r4, Contador ;numeros de tentativas	
+    cmp r3,r4
+    jeq PrintaTentativa3
+
+    loadn r3, #3 ;compara
+    load r4, Contador ;numeros de tentativas	
+    cmp r3,r4
+    jeq PrintaTentativa4
+
+    loadn r3, #4 ;compara
+    load r4, Contador ;numeros de tentativas	
+    cmp r3,r4
+    jeq PrintaTentativa5
+
+    loadn r3, #5;compara
+    load r4, Contador ;numeros de tentativas	
+    cmp r3,r4
+    jeq PrintaTentativa6
+
+    loadn r3, #6 ;compara
+    load r4, Contador ;numeros de tentativas	
+    cmp r3,r4
+    jeq PrintaTentativa7
+
+    loadn r3, #7 ;compara
+    load r4, Contador ;numeros de tentativas	
+    cmp r3,r4
+    jeq PrintaTentativa8
+
+    PrintaTentativa_Fim:
+	   pop r4
+		pop r3
+		pop r2
+		pop r1
+		pop r0
+		rts
+
+	PrintaTentativa1:	
+		
+		loadn r0, #223    ;posicao da tela onde é impresso
+		loadn r1, #'1'    ;caracter impresso
+	   loadn r2, #3328   ;cor rosa
+	   add r1,r1,r2      ;colore o caracter
+		outchar r1, r0    ;imprime o caracter r1 na posicao r0
+	   loadn r0, #213
+		loadn r1, #Msn4
+		loadn r2, #3328
+		call ImprimeStr
+		jmp PrintaTentativa_Fim
+	   
+		
+	PrintaTentativa2:	
+
+		loadn r0, #223    ;posicao da tela onde é impresso
+		loadn r1, #'2'    ;caracter impresso
+	   loadn r2, #3328   ;cor rosa
+	   add r1,r1,r2      ;colore o caracter
+		outchar r1, r0    ;imprime o caracter r1 na posicao r0
+	   loadn r0, #213
+		loadn r1, #Msn4
+		loadn r2, #3328
+		call ImprimeStr
+		jmp PrintaTentativa_Fim
+	   
+	
+	PrintaTentativa3:	
+		
+		loadn r0, #223    ;posicao da tela onde é impresso
+		loadn r1, #'3'    ;caracter impresso
+	   loadn r2, #3328   ;cor rosa
+	   add r1,r1,r2      ;colore o caracter
+		outchar r1, r0    ;imprime o caracter r1 na posicao r0
+	   loadn r0, #213
+		loadn r1, #Msn4
+		loadn r2, #3328
+		call ImprimeStr
+		jmp PrintaTentativa_Fim
+
+
+	PrintaTentativa4:	
+		
+		loadn r0, #223    ;posicao da tela onde é impresso
+		loadn r1, #'4'    ;caracter impresso
+	   loadn r2, #3328   ;cor rosa
+	   add r1,r1,r2      ;colore o caracter
+		outchar r1, r0    ;imprime o caracter r1 na posicao r0
+	   loadn r0, #213
+		loadn r1, #Msn4
+		loadn r2, #3328
+		call ImprimeStr
+		jmp PrintaTentativa_Fim
+	   
+		
+	PrintaTentativa5:	
+		
+		loadn r0, #223    ;posicao da tela onde é impresso
+		loadn r1, #'5'    ;caracter impresso
+	   loadn r2, #3328   ;cor rosa
+	   add r1,r1,r2      ;colore o caracter
+		outchar r1, r0    ;imprime o caracter r1 na posicao r0
+	   loadn r0, #213
+		loadn r1, #Msn4
+		loadn r2, #3328
+		call ImprimeStr
+		jmp PrintaTentativa_Fim
+	   
+		
+	PrintaTentativa6:	
+		
+		loadn r0, #223    ;posicao da tela onde é impresso
+		loadn r1, #'6'    ;caracter impresso
+	   loadn r2, #3328   ;cor rosa
+	   add r1,r1,r2      ;colore o caracter
+		outchar r1, r0    ;imprime o caracter r1 na posicao r0
+	   loadn r0, #213
+		loadn r1, #Msn4
+		loadn r2, #3328
+		call ImprimeStr
+	   jmp PrintaTentativa_Fim
+		
+
+	PrintaTentativa7:	
+		
+		loadn r0, #223    ;posicao da tela onde é impresso
+		loadn r1, #'7'    ;caracter impresso
+	   loadn r2, #3328   ;cor rosa
+	   add r1,r1,r2      ;colore o caracter
+		outchar r1, r0    ;imprime o caracter r1 na posicao r0
+	   loadn r0, #213
+		loadn r1, #Msn4
+		loadn r2, #3328
+		call ImprimeStr
+	   jmp PrintaTentativa_Fim
+
+
+	PrintaTentativa8:	
+
+		loadn r0, #223    ;posicao da tela onde é impresso
+		loadn r1, #'8'    ;caracter impresso
+	   loadn r2, #3328   ;cor rosa
+	   add r1,r1,r2      ;colore o caracter
+		outchar r1, r0    ;imprime o caracter r1 na posicao r0
+	   loadn r0, #213
+		loadn r1, #Msn4
+		loadn r2, #3328
+		call ImprimeStr
+		jmp PrintaTentativa_Fim
 
   ;Tela das instruções
-  tela2 : var #1200
-  ;Linha 0
   tela2 : var #1200
   ;Linha 0
   static tela2 + #0, #2877
@@ -3138,17 +3297,17 @@ GeradorPalavra:
   static tela2 + #52, #3967
   static tela2 + #53, #3967
   static tela2 + #54, #3967
-  static tela2 + #55, #3967
-  static tela2 + #56, #3967
-  static tela2 + #57, #3967
-  static tela2 + #58, #3967
-  static tela2 + #59, #3967
-  static tela2 + #60, #3967
-  static tela2 + #61, #3967
-  static tela2 + #62, #3967
-  static tela2 + #63, #3967
-  static tela2 + #64, #3967
-  static tela2 + #65, #3967
+  static tela2 + #55, #2836
+  static tela2 + #56, #2836
+  static tela2 + #57, #2836
+  static tela2 + #58, #2836
+  static tela2 + #59, #2836
+  static tela2 + #60, #2836
+  static tela2 + #61, #2836
+  static tela2 + #62, #2836
+  static tela2 + #63, #2836
+  static tela2 + #64, #2836
+  static tela2 + #65, #2836
   static tela2 + #66, #3967
   static tela2 + #67, #3967
   static tela2 + #68, #3967
@@ -3171,31 +3330,31 @@ GeradorPalavra:
   static tela2 + #83, #3967
   static tela2 + #84, #3967
   static tela2 + #85, #3967
-  static tela2 + #86, #3395
-  static tela2 + #87, #3407
-  static tela2 + #88, #3405
-  static tela2 + #89, #3407
-  static tela2 + #90, #3967
-  static tela2 + #91, #3398
-  static tela2 + #92, #3413
-  static tela2 + #93, #3406
-  static tela2 + #94, #3395
-  static tela2 + #95, #3401
-  static tela2 + #96, #3407
+  static tela2 + #86, #3967
+  static tela2 + #87, #3967
+  static tela2 + #88, #3967
+  static tela2 + #89, #3967
+  static tela2 + #90, #3395
+  static tela2 + #91, #3407
+  static tela2 + #92, #3405
+  static tela2 + #93, #3407
+  static tela2 + #94, #3967
+  static tela2 + #95, #3398
+  static tela2 + #96, #3413
   static tela2 + #97, #3406
-  static tela2 + #98, #3393
-  static tela2 + #99, #3967
+  static tela2 + #98, #3395
+  static tela2 + #99, #3401
   static tela2 + #100, #3407
-  static tela2 + #101, #3967
-  static tela2 + #102, #3402
-  static tela2 + #103, #3407
-  static tela2 + #104, #3399
-  static tela2 + #105, #3407
-  static tela2 + #106, #3391
-  static tela2 + #107, #3967
-  static tela2 + #108, #3967
-  static tela2 + #109, #3967
-  static tela2 + #110, #3967
+  static tela2 + #101, #3406
+  static tela2 + #102, #3393
+  static tela2 + #103, #3967
+  static tela2 + #104, #3407
+  static tela2 + #105, #3967
+  static tela2 + #106, #3402
+  static tela2 + #107, #3407
+  static tela2 + #108, #3399
+  static tela2 + #109, #3407
+  static tela2 + #110, #3391
   static tela2 + #111, #3967
   static tela2 + #112, #3967
   static tela2 + #113, #3967
@@ -3216,29 +3375,29 @@ GeradorPalavra:
   static tela2 + #126, #3967
   static tela2 + #127, #3967
   static tela2 + #128, #3967
-  static tela2 + #129, #3967
-  static tela2 + #130, #3967
-  static tela2 + #131, #3967
-  static tela2 + #132, #3967
-  static tela2 + #133, #3967
-  static tela2 + #134, #3967
-  static tela2 + #135, #3967
-  static tela2 + #136, #3967
-  static tela2 + #137, #3967
-  static tela2 + #138, #3967
-  static tela2 + #139, #3967
-  static tela2 + #140, #3967
-  static tela2 + #141, #3967
-  static tela2 + #142, #3967
-  static tela2 + #143, #3967
-  static tela2 + #144, #3967
-  static tela2 + #145, #3967
-  static tela2 + #146, #3967
-  static tela2 + #147, #3967
-  static tela2 + #148, #3967
-  static tela2 + #149, #3967
-  static tela2 + #150, #3967
-  static tela2 + #151, #3967
+  static tela2 + #129, #3114
+  static tela2 + #130, #3114
+  static tela2 + #131, #3114
+  static tela2 + #132, #3114
+  static tela2 + #133, #3114
+  static tela2 + #134, #3114
+  static tela2 + #135, #3114
+  static tela2 + #136, #3114
+  static tela2 + #137, #3114
+  static tela2 + #138, #3114
+  static tela2 + #139, #3114
+  static tela2 + #140, #3114
+  static tela2 + #141, #3114
+  static tela2 + #142, #3114
+  static tela2 + #143, #3114
+  static tela2 + #144, #3114
+  static tela2 + #145, #3114
+  static tela2 + #146, #3114
+  static tela2 + #147, #3114
+  static tela2 + #148, #3114
+  static tela2 + #149, #3114
+  static tela2 + #150, #3114
+  static tela2 + #151, #3114
   static tela2 + #152, #3967
   static tela2 + #153, #3967
   static tela2 + #154, #3967
@@ -3280,7 +3439,7 @@ GeradorPalavra:
   static tela2 + #188, #3967
   static tela2 + #189, #3967
   static tela2 + #190, #3967
-  static tela2 + #191, #3967
+  static tela2 + #191, #3097
   static tela2 + #192, #3967
   static tela2 + #193, #3967
   static tela2 + #194, #3967
@@ -3334,105 +3493,105 @@ GeradorPalavra:
 
   ;Linha 6
   static tela2 + #240, #3389
-  static tela2 + #241, #2861
-  static tela2 + #242, #65
+  static tela2 + #241, #3967
+  static tela2 + #242, #3967
   static tela2 + #243, #3967
-  static tela2 + #244, #67
-  static tela2 + #245, #65
-  static tela2 + #246, #68
-  static tela2 + #247, #65
+  static tela2 + #244, #3967
+  static tela2 + #245, #3967
+  static tela2 + #246, #3967
+  static tela2 + #247, #3967
   static tela2 + #248, #3967
-  static tela2 + #249, #82
-  static tela2 + #250, #79
-  static tela2 + #251, #68
-  static tela2 + #252, #65
-  static tela2 + #253, #68
-  static tela2 + #254, #65
+  static tela2 + #249, #3967
+  static tela2 + #250, #3967
+  static tela2 + #251, #3967
+  static tela2 + #252, #3967
+  static tela2 + #253, #3967
+  static tela2 + #254, #3967
   static tela2 + #255, #3967
-  static tela2 + #256, #86
-  static tela2 + #257, #67
+  static tela2 + #256, #3967
+  static tela2 + #257, #3967
   static tela2 + #258, #3967
-  static tela2 + #259, #68
-  static tela2 + #260, #69
-  static tela2 + #261, #86
-  static tela2 + #262, #69
+  static tela2 + #259, #3967
+  static tela2 + #260, #3967
+  static tela2 + #261, #3967
+  static tela2 + #262, #3967
   static tela2 + #263, #3967
-  static tela2 + #264, #65
-  static tela2 + #265, #68
-  static tela2 + #266, #73
-  static tela2 + #267, #86
-  static tela2 + #268, #73
-  static tela2 + #269, #78
-  static tela2 + #270, #72
-  static tela2 + #271, #65
-  static tela2 + #272, #82
+  static tela2 + #264, #3967
+  static tela2 + #265, #3967
+  static tela2 + #266, #3967
+  static tela2 + #267, #3967
+  static tela2 + #268, #3967
+  static tela2 + #269, #3967
+  static tela2 + #270, #3967
+  static tela2 + #271, #3967
+  static tela2 + #272, #3967
   static tela2 + #273, #3967
-  static tela2 + #274, #65
+  static tela2 + #274, #3967
   static tela2 + #275, #3967
-  static tela2 + #276, #80
-  static tela2 + #277, #65
-  static tela2 + #278, #76
+  static tela2 + #276, #3967
+  static tela2 + #277, #3967
+  static tela2 + #278, #3967
   static tela2 + #279, #3389
 
   ;Linha 7
   static tela2 + #280, #3389
-  static tela2 + #281, #82
+  static tela2 + #281, #2859
   static tela2 + #282, #65
   static tela2 + #283, #3967
-  static tela2 + #284, #68
+  static tela2 + #284, #67
   static tela2 + #285, #65
-  static tela2 + #286, #3967
-  static tela2 + #287, #82
-  static tela2 + #288, #79
-  static tela2 + #289, #68
-  static tela2 + #290, #65
+  static tela2 + #286, #68
+  static tela2 + #287, #65
+  static tela2 + #288, #3967
+  static tela2 + #289, #82
+  static tela2 + #290, #79
   static tela2 + #291, #68
   static tela2 + #292, #65
-  static tela2 + #293, #46
-  static tela2 + #294, #3967
+  static tela2 + #293, #68
+  static tela2 + #294, #65
   static tela2 + #295, #3967
-  static tela2 + #296, #3967
-  static tela2 + #297, #3967
+  static tela2 + #296, #86
+  static tela2 + #297, #67
   static tela2 + #298, #3967
-  static tela2 + #299, #3967
-  static tela2 + #300, #3967
-  static tela2 + #301, #3967
-  static tela2 + #302, #3967
+  static tela2 + #299, #68
+  static tela2 + #300, #69
+  static tela2 + #301, #86
+  static tela2 + #302, #69
   static tela2 + #303, #3967
-  static tela2 + #304, #3967
-  static tela2 + #305, #3967
-  static tela2 + #306, #3967
-  static tela2 + #307, #3967
-  static tela2 + #308, #3967
-  static tela2 + #309, #3967
-  static tela2 + #310, #3967
-  static tela2 + #311, #3967
-  static tela2 + #312, #3967
+  static tela2 + #304, #65
+  static tela2 + #305, #68
+  static tela2 + #306, #73
+  static tela2 + #307, #86
+  static tela2 + #308, #73
+  static tela2 + #309, #78
+  static tela2 + #310, #72
+  static tela2 + #311, #65
+  static tela2 + #312, #82
   static tela2 + #313, #3967
-  static tela2 + #314, #3967
+  static tela2 + #314, #65
   static tela2 + #315, #3967
-  static tela2 + #316, #3967
-  static tela2 + #317, #3967
-  static tela2 + #318, #3967
+  static tela2 + #316, #80
+  static tela2 + #317, #65
+  static tela2 + #318, #76
   static tela2 + #319, #3389
 
   ;Linha 8
   static tela2 + #320, #3389
-  static tela2 + #321, #3967
-  static tela2 + #322, #3967
-  static tela2 + #323, #3967
-  static tela2 + #324, #3967
+  static tela2 + #321, #65
+  static tela2 + #322, #86
+  static tela2 + #323, #82
+  static tela2 + #324, #65
   static tela2 + #325, #3967
-  static tela2 + #326, #3967
-  static tela2 + #327, #3967
+  static tela2 + #326, #68
+  static tela2 + #327, #65
   static tela2 + #328, #3967
-  static tela2 + #329, #3967
-  static tela2 + #330, #3967
-  static tela2 + #331, #3967
-  static tela2 + #332, #3967
-  static tela2 + #333, #3967
-  static tela2 + #334, #3967
-  static tela2 + #335, #3967
+  static tela2 + #329, #82
+  static tela2 + #330, #79
+  static tela2 + #331, #68
+  static tela2 + #332, #65
+  static tela2 + #333, #68
+  static tela2 + #334, #65
+  static tela2 + #335, #46
   static tela2 + #336, #3967
   static tela2 + #337, #3967
   static tela2 + #338, #3967
@@ -3502,86 +3661,86 @@ GeradorPalavra:
 
   ;Linha 10
   static tela2 + #400, #3389
-  static tela2 + #401, #2861
-  static tela2 + #402, #84
-  static tela2 + #403, #79
-  static tela2 + #404, #68
-  static tela2 + #405, #65
-  static tela2 + #406, #83
+  static tela2 + #401, #3967
+  static tela2 + #402, #3967
+  static tela2 + #403, #3967
+  static tela2 + #404, #3967
+  static tela2 + #405, #3967
+  static tela2 + #406, #3967
   static tela2 + #407, #3967
-  static tela2 + #408, #65
-  static tela2 + #409, #83
+  static tela2 + #408, #6
+  static tela2 + #409, #3967
   static tela2 + #410, #3967
-  static tela2 + #411, #80
-  static tela2 + #412, #65
-  static tela2 + #413, #76
-  static tela2 + #414, #65
-  static tela2 + #415, #86
-  static tela2 + #416, #82
-  static tela2 + #417, #65
-  static tela2 + #418, #83
+  static tela2 + #411, #3967
+  static tela2 + #412, #3967
+  static tela2 + #413, #3967
+  static tela2 + #414, #3967
+  static tela2 + #415, #3967
+  static tela2 + #416, #3967
+  static tela2 + #417, #3967
+  static tela2 + #418, #3967
   static tela2 + #419, #3967
-  static tela2 + #420, #80
-  static tela2 + #421, #79
-  static tela2 + #422, #83
-  static tela2 + #423, #83
-  static tela2 + #424, #85
-  static tela2 + #425, #69
-  static tela2 + #426, #77
+  static tela2 + #420, #3967
+  static tela2 + #421, #3967
+  static tela2 + #422, #3967
+  static tela2 + #423, #3967
+  static tela2 + #424, #3967
+  static tela2 + #425, #3967
+  static tela2 + #426, #3967
   static tela2 + #427, #3967
-  static tela2 + #428, #53
+  static tela2 + #428, #3967
   static tela2 + #429, #3967
-  static tela2 + #430, #76
-  static tela2 + #431, #69
-  static tela2 + #432, #84
-  static tela2 + #433, #82
-  static tela2 + #434, #65
-  static tela2 + #435, #83
-  static tela2 + #436, #46
+  static tela2 + #430, #3967
+  static tela2 + #431, #3967
+  static tela2 + #432, #3967
+  static tela2 + #433, #3967
+  static tela2 + #434, #3967
+  static tela2 + #435, #3967
+  static tela2 + #436, #3967
   static tela2 + #437, #3967
-  static tela2 + #438, #3356
+  static tela2 + #438, #3967
   static tela2 + #439, #3389
 
   ;Linha 11
   static tela2 + #440, #3389
-  static tela2 + #441, #3967
-  static tela2 + #442, #3967
-  static tela2 + #443, #3967
-  static tela2 + #444, #3967
-  static tela2 + #445, #3967
-  static tela2 + #446, #3967
+  static tela2 + #441, #2859
+  static tela2 + #442, #84
+  static tela2 + #443, #79
+  static tela2 + #444, #68
+  static tela2 + #445, #65
+  static tela2 + #446, #83
   static tela2 + #447, #3967
-  static tela2 + #448, #3967
-  static tela2 + #449, #3967
+  static tela2 + #448, #65
+  static tela2 + #449, #83
   static tela2 + #450, #3967
-  static tela2 + #451, #3967
-  static tela2 + #452, #3967
-  static tela2 + #453, #3967
-  static tela2 + #454, #3967
-  static tela2 + #455, #3967
-  static tela2 + #456, #3967
-  static tela2 + #457, #3967
-  static tela2 + #458, #3967
+  static tela2 + #451, #80
+  static tela2 + #452, #65
+  static tela2 + #453, #76
+  static tela2 + #454, #65
+  static tela2 + #455, #86
+  static tela2 + #456, #82
+  static tela2 + #457, #65
+  static tela2 + #458, #83
   static tela2 + #459, #3967
-  static tela2 + #460, #3967
-  static tela2 + #461, #3967
-  static tela2 + #462, #3967
-  static tela2 + #463, #3967
-  static tela2 + #464, #3967
-  static tela2 + #465, #3967
-  static tela2 + #466, #3967
+  static tela2 + #460, #80
+  static tela2 + #461, #79
+  static tela2 + #462, #83
+  static tela2 + #463, #83
+  static tela2 + #464, #85
+  static tela2 + #465, #69
+  static tela2 + #466, #77
   static tela2 + #467, #3967
-  static tela2 + #468, #3967
+  static tela2 + #468, #53
   static tela2 + #469, #3967
-  static tela2 + #470, #3967
-  static tela2 + #471, #3967
-  static tela2 + #472, #3967
-  static tela2 + #473, #3967
-  static tela2 + #474, #3967
-  static tela2 + #475, #3967
-  static tela2 + #476, #3967
+  static tela2 + #470, #76
+  static tela2 + #471, #69
+  static tela2 + #472, #84
+  static tela2 + #473, #82
+  static tela2 + #474, #65
+  static tela2 + #475, #83
+  static tela2 + #476, #46
   static tela2 + #477, #3967
-  static tela2 + #478, #3356
+  static tela2 + #478, #3967
   static tela2 + #479, #3389
 
   ;Linha 12
@@ -3623,124 +3782,124 @@ GeradorPalavra:
   static tela2 + #515, #3967
   static tela2 + #516, #3967
   static tela2 + #517, #3967
-  static tela2 + #518, #3356
+  static tela2 + #518, #3967
   static tela2 + #519, #3389
 
   ;Linha 13
   static tela2 + #520, #3389
-  static tela2 + #521, #2861
-  static tela2 + #522, #86
-  static tela2 + #523, #67
+  static tela2 + #521, #3967
+  static tela2 + #522, #3967
+  static tela2 + #523, #3967
   static tela2 + #524, #3967
-  static tela2 + #525, #84
-  static tela2 + #526, #69
-  static tela2 + #527, #77
+  static tela2 + #525, #3967
+  static tela2 + #526, #3967
+  static tela2 + #527, #3967
   static tela2 + #528, #3967
-  static tela2 + #529, #53
+  static tela2 + #529, #3967
   static tela2 + #530, #3967
-  static tela2 + #531, #84
-  static tela2 + #532, #69
-  static tela2 + #533, #78
-  static tela2 + #534, #84
-  static tela2 + #535, #65
-  static tela2 + #536, #84
-  static tela2 + #537, #73
-  static tela2 + #538, #86
-  static tela2 + #539, #65
-  static tela2 + #540, #83
-  static tela2 + #541, #44
-  static tela2 + #542, #65
+  static tela2 + #531, #3967
+  static tela2 + #532, #3967
+  static tela2 + #533, #3967
+  static tela2 + #534, #3967
+  static tela2 + #535, #3967
+  static tela2 + #536, #3967
+  static tela2 + #537, #3967
+  static tela2 + #538, #3967
+  static tela2 + #539, #3967
+  static tela2 + #540, #3967
+  static tela2 + #541, #3967
+  static tela2 + #542, #3967
   static tela2 + #543, #3967
-  static tela2 + #544, #67
-  static tela2 + #545, #65
-  static tela2 + #546, #68
-  static tela2 + #547, #65
+  static tela2 + #544, #3967
+  static tela2 + #545, #3967
+  static tela2 + #546, #3967
+  static tela2 + #547, #3967
   static tela2 + #548, #3967
-  static tela2 + #549, #84
-  static tela2 + #550, #69
-  static tela2 + #551, #78
-  static tela2 + #552, #84
-  static tela2 + #553, #65
-  static tela2 + #554, #84
-  static tela2 + #555, #73
-  static tela2 + #556, #86
-  static tela2 + #557, #65
-  static tela2 + #558, #3356
+  static tela2 + #549, #3967
+  static tela2 + #550, #3967
+  static tela2 + #551, #3967
+  static tela2 + #552, #3967
+  static tela2 + #553, #3967
+  static tela2 + #554, #3967
+  static tela2 + #555, #3967
+  static tela2 + #556, #3967
+  static tela2 + #557, #3967
+  static tela2 + #558, #3967
   static tela2 + #559, #3389
 
   ;Linha 14
   static tela2 + #560, #3389
-  static tela2 + #561, #69
-  static tela2 + #562, #82
-  static tela2 + #563, #65
-  static tela2 + #564, #79
-  static tela2 + #565, #7
-  static tela2 + #566, #77
-  static tela2 + #567, #79
-  static tela2 + #568, #83
-  static tela2 + #569, #84
-  static tela2 + #570, #82
-  static tela2 + #571, #65
-  static tela2 + #572, #68
-  static tela2 + #573, #65
-  static tela2 + #574, #83
-  static tela2 + #575, #3967
-  static tela2 + #576, #65
-  static tela2 + #577, #83
-  static tela2 + #578, #3967
-  static tela2 + #579, #76
-  static tela2 + #580, #69
-  static tela2 + #581, #84
-  static tela2 + #582, #82
-  static tela2 + #583, #65
-  static tela2 + #584, #83
-  static tela2 + #585, #2569
-  static tela2 + #586, #2627
-  static tela2 + #587, #2639
-  static tela2 + #588, #2642
-  static tela2 + #589, #2642
-  static tela2 + #590, #2629
-  static tela2 + #591, #2644
-  static tela2 + #592, #2625
-  static tela2 + #593, #2643
-  static tela2 + #594, #2310
-  static tela2 + #595, #79
-  static tela2 + #596, #85
+  static tela2 + #561, #2859
+  static tela2 + #562, #86
+  static tela2 + #563, #67
+  static tela2 + #564, #4
+  static tela2 + #565, #84
+  static tela2 + #566, #69
+  static tela2 + #567, #77
+  static tela2 + #568, #4
+  static tela2 + #569, #56
+  static tela2 + #570, #4
+  static tela2 + #571, #84
+  static tela2 + #572, #69
+  static tela2 + #573, #78
+  static tela2 + #574, #84
+  static tela2 + #575, #65
+  static tela2 + #576, #84
+  static tela2 + #577, #73
+  static tela2 + #578, #86
+  static tela2 + #579, #65
+  static tela2 + #580, #83
+  static tela2 + #581, #3967
+  static tela2 + #582, #65
+  static tela2 + #583, #3967
+  static tela2 + #584, #67
+  static tela2 + #585, #65
+  static tela2 + #586, #68
+  static tela2 + #587, #65
+  static tela2 + #588, #3967
+  static tela2 + #589, #82
+  static tela2 + #590, #79
+  static tela2 + #591, #68
+  static tela2 + #592, #65
+  static tela2 + #593, #68
+  static tela2 + #594, #65
+  static tela2 + #595, #46
+  static tela2 + #596, #3967
   static tela2 + #597, #3967
   static tela2 + #598, #3967
   static tela2 + #599, #3389
 
   ;Linha 15
   static tela2 + #600, #3389
-  static tela2 + #601, #2373
-  static tela2 + #602, #2386
-  static tela2 + #603, #2386
-  static tela2 + #604, #2369
-  static tela2 + #605, #2372
-  static tela2 + #606, #2369
-  static tela2 + #607, #2387
-  static tela2 + #608, #3343
-  static tela2 + #609, #80
-  static tela2 + #610, #82
-  static tela2 + #611, #69
-  static tela2 + #612, #83
-  static tela2 + #613, #69
-  static tela2 + #614, #78
-  static tela2 + #615, #84
-  static tela2 + #616, #69
-  static tela2 + #617, #83
-  static tela2 + #618, #3343
-  static tela2 + #619, #78
-  static tela2 + #620, #65
-  static tela2 + #621, #3343
-  static tela2 + #622, #80
-  static tela2 + #623, #65
-  static tela2 + #624, #76
-  static tela2 + #625, #65
-  static tela2 + #626, #86
-  static tela2 + #627, #82
-  static tela2 + #628, #65
-  static tela2 + #629, #46
+  static tela2 + #601, #3967
+  static tela2 + #602, #3967
+  static tela2 + #603, #3967
+  static tela2 + #604, #3967
+  static tela2 + #605, #3967
+  static tela2 + #606, #3967
+  static tela2 + #607, #3967
+  static tela2 + #608, #3967
+  static tela2 + #609, #3967
+  static tela2 + #610, #3967
+  static tela2 + #611, #3967
+  static tela2 + #612, #3967
+  static tela2 + #613, #3967
+  static tela2 + #614, #3967
+  static tela2 + #615, #3967
+  static tela2 + #616, #3967
+  static tela2 + #617, #3967
+  static tela2 + #618, #3967
+  static tela2 + #619, #3967
+  static tela2 + #620, #3967
+  static tela2 + #621, #3967
+  static tela2 + #622, #3967
+  static tela2 + #623, #3967
+  static tela2 + #624, #3967
+  static tela2 + #625, #3967
+  static tela2 + #626, #3967
+  static tela2 + #627, #3967
+  static tela2 + #628, #3967
+  static tela2 + #629, #3967
   static tela2 + #630, #3967
   static tela2 + #631, #3967
   static tela2 + #632, #3967
@@ -3775,7 +3934,7 @@ GeradorPalavra:
   static tela2 + #659, #3967
   static tela2 + #660, #3967
   static tela2 + #661, #3967
-  static tela2 + #662, #3967
+  static tela2 + #662, #15
   static tela2 + #663, #3967
   static tela2 + #664, #3967
   static tela2 + #665, #3967
@@ -3796,83 +3955,83 @@ GeradorPalavra:
 
   ;Linha 17
   static tela2 + #680, #3389
-  static tela2 + #681, #3967
-  static tela2 + #682, #3967
+  static tela2 + #681, #2859
+  static tela2 + #682, #65
   static tela2 + #683, #3967
-  static tela2 + #684, #3967
-  static tela2 + #685, #3967
-  static tela2 + #686, #3967
-  static tela2 + #687, #3967
+  static tela2 + #684, #67
+  static tela2 + #685, #65
+  static tela2 + #686, #68
+  static tela2 + #687, #65
   static tela2 + #688, #3967
-  static tela2 + #689, #3967
-  static tela2 + #690, #3967
-  static tela2 + #691, #3967
-  static tela2 + #692, #3967
-  static tela2 + #693, #3967
-  static tela2 + #694, #3967
-  static tela2 + #695, #3967
-  static tela2 + #696, #3967
-  static tela2 + #697, #3967
+  static tela2 + #689, #84
+  static tela2 + #690, #69
+  static tela2 + #691, #78
+  static tela2 + #692, #84
+  static tela2 + #693, #65
+  static tela2 + #694, #84
+  static tela2 + #695, #73
+  static tela2 + #696, #86
+  static tela2 + #697, #65
   static tela2 + #698, #3967
-  static tela2 + #699, #3967
-  static tela2 + #700, #3967
-  static tela2 + #701, #3967
-  static tela2 + #702, #3967
-  static tela2 + #703, #3967
+  static tela2 + #699, #83
+  static tela2 + #700, #69
+  static tela2 + #701, #82
+  static tela2 + #702, #65
+  static tela2 + #703, #79
   static tela2 + #704, #3967
-  static tela2 + #705, #3967
-  static tela2 + #706, #3967
-  static tela2 + #707, #3967
-  static tela2 + #708, #3967
-  static tela2 + #709, #3967
-  static tela2 + #710, #3967
-  static tela2 + #711, #3967
-  static tela2 + #712, #3967
-  static tela2 + #713, #3967
+  static tela2 + #705, #77
+  static tela2 + #706, #79
+  static tela2 + #707, #83
+  static tela2 + #708, #84
+  static tela2 + #709, #82
+  static tela2 + #710, #65
+  static tela2 + #711, #68
+  static tela2 + #712, #65
+  static tela2 + #713, #83
   static tela2 + #714, #3967
-  static tela2 + #715, #3967
-  static tela2 + #716, #3967
+  static tela2 + #715, #65
+  static tela2 + #716, #83
   static tela2 + #717, #3967
   static tela2 + #718, #3967
   static tela2 + #719, #3389
 
   ;Linha 18
   static tela2 + #720, #3389
-  static tela2 + #721, #3967
-  static tela2 + #722, #3967
-  static tela2 + #723, #3967
-  static tela2 + #724, #3967
-  static tela2 + #725, #3084
-  static tela2 + #726, #3084
-  static tela2 + #727, #3084
-  static tela2 + #728, #3084
-  static tela2 + #729, #3084
-  static tela2 + #730, #3084
-  static tela2 + #731, #3084
-  static tela2 + #732, #3084
-  static tela2 + #733, #3084
-  static tela2 + #734, #3084
-  static tela2 + #735, #3084
-  static tela2 + #736, #3084
-  static tela2 + #737, #3084
-  static tela2 + #738, #3084
-  static tela2 + #739, #3084
-  static tela2 + #740, #3084
-  static tela2 + #741, #3084
-  static tela2 + #742, #3084
-  static tela2 + #743, #3084
-  static tela2 + #744, #3084
-  static tela2 + #745, #3084
-  static tela2 + #746, #3084
-  static tela2 + #747, #3084
-  static tela2 + #748, #3084
-  static tela2 + #749, #3084
-  static tela2 + #750, #3084
-  static tela2 + #751, #3084
-  static tela2 + #752, #3967
-  static tela2 + #753, #3967
-  static tela2 + #754, #3967
-  static tela2 + #755, #3967
+  static tela2 + #721, #76
+  static tela2 + #722, #69
+  static tela2 + #723, #84
+  static tela2 + #724, #82
+  static tela2 + #725, #65
+  static tela2 + #726, #83
+  static tela2 + #727, #3967
+  static tela2 + #728, #2640
+  static tela2 + #729, #2642
+  static tela2 + #730, #2629
+  static tela2 + #731, #2643
+  static tela2 + #732, #2629
+  static tela2 + #733, #2638
+  static tela2 + #734, #2644
+  static tela2 + #735, #2629
+  static tela2 + #736, #2643
+  static tela2 + #737, #3967
+  static tela2 + #738, #79
+  static tela2 + #739, #85
+  static tela2 + #740, #3967
+  static tela2 + #741, #2382
+  static tela2 + #742, #2369
+  static tela2 + #743, #2383
+  static tela2 + #744, #3967
+  static tela2 + #745, #78
+  static tela2 + #746, #65
+  static tela2 + #747, #3967
+  static tela2 + #748, #80
+  static tela2 + #749, #65
+  static tela2 + #750, #76
+  static tela2 + #751, #65
+  static tela2 + #752, #86
+  static tela2 + #753, #82
+  static tela2 + #754, #65
+  static tela2 + #755, #46
   static tela2 + #756, #3967
   static tela2 + #757, #3967
   static tela2 + #758, #3967
@@ -3880,70 +4039,70 @@ GeradorPalavra:
 
   ;Linha 19
   static tela2 + #760, #3389
-  static tela2 + #761, #3334
-  static tela2 + #762, #3334
-  static tela2 + #763, #3334
-  static tela2 + #764, #3334
-  static tela2 + #765, #3114
-  static tela2 + #766, #3114
-  static tela2 + #767, #3114
-  static tela2 + #768, #3114
-  static tela2 + #769, #3114
-  static tela2 + #770, #3114
-  static tela2 + #771, #3114
-  static tela2 + #772, #3114
-  static tela2 + #773, #3114
-  static tela2 + #774, #3114
-  static tela2 + #775, #3114
-  static tela2 + #776, #3114
-  static tela2 + #777, #3114
-  static tela2 + #778, #3114
-  static tela2 + #779, #3114
-  static tela2 + #780, #3114
-  static tela2 + #781, #3114
-  static tela2 + #782, #3114
-  static tela2 + #783, #3114
-  static tela2 + #784, #3114
-  static tela2 + #785, #3114
-  static tela2 + #786, #3114
-  static tela2 + #787, #3114
-  static tela2 + #788, #3114
-  static tela2 + #789, #3114
-  static tela2 + #790, #3114
-  static tela2 + #791, #3334
-  static tela2 + #792, #3334
-  static tela2 + #793, #3334
-  static tela2 + #794, #3334
-  static tela2 + #795, #3334
-  static tela2 + #796, #3334
-  static tela2 + #797, #3334
-  static tela2 + #798, #3334
+  static tela2 + #761, #3967
+  static tela2 + #762, #3967
+  static tela2 + #763, #3967
+  static tela2 + #764, #3967
+  static tela2 + #765, #3967
+  static tela2 + #766, #3967
+  static tela2 + #767, #3967
+  static tela2 + #768, #3967
+  static tela2 + #769, #2567
+  static tela2 + #770, #3967
+  static tela2 + #771, #3967
+  static tela2 + #772, #3967
+  static tela2 + #773, #3967
+  static tela2 + #774, #3967
+  static tela2 + #775, #3967
+  static tela2 + #776, #3967
+  static tela2 + #777, #3967
+  static tela2 + #778, #3967
+  static tela2 + #779, #3967
+  static tela2 + #780, #3967
+  static tela2 + #781, #3967
+  static tela2 + #782, #3967
+  static tela2 + #783, #3967
+  static tela2 + #784, #3967
+  static tela2 + #785, #3967
+  static tela2 + #786, #3967
+  static tela2 + #787, #3967
+  static tela2 + #788, #3967
+  static tela2 + #789, #3967
+  static tela2 + #790, #3967
+  static tela2 + #791, #3967
+  static tela2 + #792, #3967
+  static tela2 + #793, #3967
+  static tela2 + #794, #3967
+  static tela2 + #795, #3967
+  static tela2 + #796, #3967
+  static tela2 + #797, #3967
+  static tela2 + #798, #3967
   static tela2 + #799, #3389
 
   ;Linha 20
   static tela2 + #800, #3389
-  static tela2 + #801, #3079
-  static tela2 + #802, #3079
-  static tela2 + #803, #3079
-  static tela2 + #804, #3079
-  static tela2 + #805, #3114
-  static tela2 + #806, #3079
+  static tela2 + #801, #3967
+  static tela2 + #802, #3967
+  static tela2 + #803, #3967
+  static tela2 + #804, #3967
+  static tela2 + #805, #3967
+  static tela2 + #806, #3967
   static tela2 + #807, #3967
   static tela2 + #808, #3967
   static tela2 + #809, #3967
   static tela2 + #810, #3967
-  static tela2 + #811, #3080
-  static tela2 + #812, #3080
-  static tela2 + #813, #3080
-  static tela2 + #814, #3080
-  static tela2 + #815, #3080
-  static tela2 + #816, #3080
-  static tela2 + #817, #3080
-  static tela2 + #818, #3080
-  static tela2 + #819, #3080
-  static tela2 + #820, #3080
-  static tela2 + #821, #3080
-  static tela2 + #822, #3080
+  static tela2 + #811, #3967
+  static tela2 + #812, #3967
+  static tela2 + #813, #3967
+  static tela2 + #814, #3967
+  static tela2 + #815, #3967
+  static tela2 + #816, #3967
+  static tela2 + #817, #3967
+  static tela2 + #818, #3967
+  static tela2 + #819, #3967
+  static tela2 + #820, #3967
+  static tela2 + #821, #3967
+  static tela2 + #822, #3967
   static tela2 + #823, #3967
   static tela2 + #824, #3967
   static tela2 + #825, #3967
@@ -3951,7 +4110,7 @@ GeradorPalavra:
   static tela2 + #827, #3967
   static tela2 + #828, #3967
   static tela2 + #829, #3967
-  static tela2 + #830, #3114
+  static tela2 + #830, #3967
   static tela2 + #831, #3967
   static tela2 + #832, #3967
   static tela2 + #833, #3967
@@ -3964,35 +4123,35 @@ GeradorPalavra:
 
   ;Linha 21
   static tela2 + #840, #3389
-  static tela2 + #841, #3079
-  static tela2 + #842, #3079
-  static tela2 + #843, #3079
-  static tela2 + #844, #3079
-  static tela2 + #845, #3114
-  static tela2 + #846, #3079
-  static tela2 + #847, #65
-  static tela2 + #848, #80
-  static tela2 + #849, #69
-  static tela2 + #850, #82
-  static tela2 + #851, #84
-  static tela2 + #852, #69
-  static tela2 + #853, #3967
-  static tela2 + #854, #3390
-  static tela2 + #855, #3376
-  static tela2 + #856, #3388
-  static tela2 + #857, #3967
-  static tela2 + #858, #80
-  static tela2 + #859, #65
-  static tela2 + #860, #82
-  static tela2 + #861, #65
-  static tela2 + #862, #3967
-  static tela2 + #863, #86
-  static tela2 + #864, #79
-  static tela2 + #865, #76
-  static tela2 + #866, #84
-  static tela2 + #867, #65
-  static tela2 + #868, #82
-  static tela2 + #869, #3967
+  static tela2 + #841, #3967
+  static tela2 + #842, #3967
+  static tela2 + #843, #3967
+  static tela2 + #844, #3967
+  static tela2 + #845, #3967
+  static tela2 + #846, #3114
+  static tela2 + #847, #3114
+  static tela2 + #848, #3114
+  static tela2 + #849, #3114
+  static tela2 + #850, #3114
+  static tela2 + #851, #3114
+  static tela2 + #852, #3114
+  static tela2 + #853, #3114
+  static tela2 + #854, #3114
+  static tela2 + #855, #3114
+  static tela2 + #856, #3114
+  static tela2 + #857, #3114
+  static tela2 + #858, #3114
+  static tela2 + #859, #3114
+  static tela2 + #860, #3114
+  static tela2 + #861, #3114
+  static tela2 + #862, #3114
+  static tela2 + #863, #3114
+  static tela2 + #864, #3114
+  static tela2 + #865, #3114
+  static tela2 + #866, #3114
+  static tela2 + #867, #3114
+  static tela2 + #868, #3114
+  static tela2 + #869, #3114
   static tela2 + #870, #3114
   static tela2 + #871, #3967
   static tela2 + #872, #3967
@@ -4006,35 +4165,35 @@ GeradorPalavra:
 
   ;Linha 22
   static tela2 + #880, #3389
-  static tela2 + #881, #3079
-  static tela2 + #882, #3079
-  static tela2 + #883, #3079
-  static tela2 + #884, #3079
-  static tela2 + #885, #3114
-  static tela2 + #886, #3079
+  static tela2 + #881, #3967
+  static tela2 + #882, #3967
+  static tela2 + #883, #3967
+  static tela2 + #884, #3967
+  static tela2 + #885, #3967
+  static tela2 + #886, #3114
   static tela2 + #887, #3967
-  static tela2 + #888, #3967
-  static tela2 + #889, #3967
-  static tela2 + #890, #3967
-  static tela2 + #891, #3967
-  static tela2 + #892, #3967
-  static tela2 + #893, #3967
+  static tela2 + #888, #65
+  static tela2 + #889, #80
+  static tela2 + #890, #69
+  static tela2 + #891, #82
+  static tela2 + #892, #84
+  static tela2 + #893, #69
   static tela2 + #894, #3967
-  static tela2 + #895, #3967
-  static tela2 + #896, #3967
-  static tela2 + #897, #3967
+  static tela2 + #895, #3390
+  static tela2 + #896, #3376
+  static tela2 + #897, #3388
   static tela2 + #898, #3967
-  static tela2 + #899, #3967
-  static tela2 + #900, #3967
-  static tela2 + #901, #3967
-  static tela2 + #902, #3967
-  static tela2 + #903, #3967
-  static tela2 + #904, #3967
-  static tela2 + #905, #3967
-  static tela2 + #906, #3967
-  static tela2 + #907, #3967
-  static tela2 + #908, #3967
-  static tela2 + #909, #3967
+  static tela2 + #899, #80
+  static tela2 + #900, #65
+  static tela2 + #901, #82
+  static tela2 + #902, #65
+  static tela2 + #903, #15
+  static tela2 + #904, #86
+  static tela2 + #905, #79
+  static tela2 + #906, #76
+  static tela2 + #907, #84
+  static tela2 + #908, #65
+  static tela2 + #909, #82
   static tela2 + #910, #3114
   static tela2 + #911, #3967
   static tela2 + #912, #3967
@@ -4048,12 +4207,12 @@ GeradorPalavra:
 
   ;Linha 23
   static tela2 + #920, #3389
-  static tela2 + #921, #3079
-  static tela2 + #922, #3079
-  static tela2 + #923, #3079
-  static tela2 + #924, #3079
-  static tela2 + #925, #3114
-  static tela2 + #926, #3079
+  static tela2 + #921, #3967
+  static tela2 + #922, #3967
+  static tela2 + #923, #3967
+  static tela2 + #924, #3967
+  static tela2 + #925, #3967
+  static tela2 + #926, #3114
   static tela2 + #927, #3967
   static tela2 + #928, #3967
   static tela2 + #929, #3967
@@ -4061,13 +4220,13 @@ GeradorPalavra:
   static tela2 + #931, #3967
   static tela2 + #932, #3967
   static tela2 + #933, #3967
-  static tela2 + #934, #65
-  static tela2 + #935, #79
+  static tela2 + #934, #3967
+  static tela2 + #935, #3967
   static tela2 + #936, #3967
-  static tela2 + #937, #77
-  static tela2 + #938, #69
-  static tela2 + #939, #78
-  static tela2 + #940, #85
+  static tela2 + #937, #3967
+  static tela2 + #938, #3967
+  static tela2 + #939, #3967
+  static tela2 + #940, #3967
   static tela2 + #941, #3967
   static tela2 + #942, #3967
   static tela2 + #943, #3967
@@ -4090,12 +4249,12 @@ GeradorPalavra:
 
   ;Linha 24
   static tela2 + #960, #3389
-  static tela2 + #961, #3079
-  static tela2 + #962, #3079
-  static tela2 + #963, #3079
-  static tela2 + #964, #3079
-  static tela2 + #965, #3114
-  static tela2 + #966, #3079
+  static tela2 + #961, #3967
+  static tela2 + #962, #3967
+  static tela2 + #963, #3967
+  static tela2 + #964, #3967
+  static tela2 + #965, #3967
+  static tela2 + #966, #3114
   static tela2 + #967, #3967
   static tela2 + #968, #3967
   static tela2 + #969, #3967
@@ -4103,14 +4262,14 @@ GeradorPalavra:
   static tela2 + #971, #3967
   static tela2 + #972, #3967
   static tela2 + #973, #3967
-  static tela2 + #974, #3967
-  static tela2 + #975, #3967
-  static tela2 + #976, #3967
+  static tela2 + #974, #11
+  static tela2 + #975, #65
+  static tela2 + #976, #79
   static tela2 + #977, #3967
-  static tela2 + #978, #3967
-  static tela2 + #979, #3967
-  static tela2 + #980, #3967
-  static tela2 + #981, #3967
+  static tela2 + #978, #77
+  static tela2 + #979, #69
+  static tela2 + #980, #78
+  static tela2 + #981, #85
   static tela2 + #982, #3967
   static tela2 + #983, #3967
   static tela2 + #984, #3967
@@ -4132,11 +4291,11 @@ GeradorPalavra:
 
   ;Linha 25
   static tela2 + #1000, #3389
-  static tela2 + #1001, #3334
-  static tela2 + #1002, #3334
-  static tela2 + #1003, #3334
-  static tela2 + #1004, #3334
-  static tela2 + #1005, #3114
+  static tela2 + #1001, #3967
+  static tela2 + #1002, #3967
+  static tela2 + #1003, #3967
+  static tela2 + #1004, #3967
+  static tela2 + #1005, #3967
   static tela2 + #1006, #3114
   static tela2 + #1007, #3114
   static tela2 + #1008, #3114
@@ -4162,14 +4321,14 @@ GeradorPalavra:
   static tela2 + #1028, #3114
   static tela2 + #1029, #3114
   static tela2 + #1030, #3114
-  static tela2 + #1031, #3334
-  static tela2 + #1032, #3334
-  static tela2 + #1033, #3334
-  static tela2 + #1034, #3334
-  static tela2 + #1035, #3334
-  static tela2 + #1036, #3334
-  static tela2 + #1037, #3334
-  static tela2 + #1038, #3334
+  static tela2 + #1031, #3967
+  static tela2 + #1032, #3967
+  static tela2 + #1033, #3967
+  static tela2 + #1034, #3967
+  static tela2 + #1035, #3967
+  static tela2 + #1036, #3967
+  static tela2 + #1037, #3967
+  static tela2 + #1038, #3967
   static tela2 + #1039, #3389
 
   ;Linha 26
@@ -4179,37 +4338,37 @@ GeradorPalavra:
   static tela2 + #1043, #3967
   static tela2 + #1044, #3967
   static tela2 + #1045, #3967
-  static tela2 + #1046, #3090
-  static tela2 + #1047, #3090
-  static tela2 + #1048, #3090
-  static tela2 + #1049, #3090
-  static tela2 + #1050, #3090
-  static tela2 + #1051, #3090
-  static tela2 + #1052, #3090
-  static tela2 + #1053, #3090
-  static tela2 + #1054, #3090
-  static tela2 + #1055, #3090
-  static tela2 + #1056, #3090
-  static tela2 + #1057, #3090
-  static tela2 + #1058, #3090
-  static tela2 + #1059, #3090
-  static tela2 + #1060, #3090
-  static tela2 + #1061, #3090
-  static tela2 + #1062, #3090
-  static tela2 + #1063, #3090
-  static tela2 + #1064, #3090
-  static tela2 + #1065, #3090
-  static tela2 + #1066, #3090
-  static tela2 + #1067, #3090
-  static tela2 + #1068, #3090
-  static tela2 + #1069, #3090
-  static tela2 + #1070, #3090
-  static tela2 + #1071, #3090
-  static tela2 + #1072, #3090
-  static tela2 + #1073, #3090
-  static tela2 + #1074, #3090
-  static tela2 + #1075, #3090
-  static tela2 + #1076, #3090
+  static tela2 + #1046, #3967
+  static tela2 + #1047, #3967
+  static tela2 + #1048, #3967
+  static tela2 + #1049, #3967
+  static tela2 + #1050, #3967
+  static tela2 + #1051, #3967
+  static tela2 + #1052, #3967
+  static tela2 + #1053, #3967
+  static tela2 + #1054, #3967
+  static tela2 + #1055, #3967
+  static tela2 + #1056, #3967
+  static tela2 + #1057, #3967
+  static tela2 + #1058, #3967
+  static tela2 + #1059, #3967
+  static tela2 + #1060, #3967
+  static tela2 + #1061, #3967
+  static tela2 + #1062, #3967
+  static tela2 + #1063, #3967
+  static tela2 + #1064, #3967
+  static tela2 + #1065, #3967
+  static tela2 + #1066, #3967
+  static tela2 + #1067, #3967
+  static tela2 + #1068, #3967
+  static tela2 + #1069, #3967
+  static tela2 + #1070, #3967
+  static tela2 + #1071, #3967
+  static tela2 + #1072, #3967
+  static tela2 + #1073, #3967
+  static tela2 + #1074, #3967
+  static tela2 + #1075, #3967
+  static tela2 + #1076, #3967
   static tela2 + #1077, #3967
   static tela2 + #1078, #3967
   static tela2 + #1079, #3389
@@ -4261,11 +4420,11 @@ GeradorPalavra:
   static tela2 + #1121, #3967
   static tela2 + #1122, #3967
   static tela2 + #1123, #3967
-  static tela2 + #1124, #3967
-  static tela2 + #1125, #3967
-  static tela2 + #1126, #3967
-  static tela2 + #1127, #3967
-  static tela2 + #1128, #3967
+  static tela2 + #1124, #2826
+  static tela2 + #1125, #2826
+  static tela2 + #1126, #2826
+  static tela2 + #1127, #2826
+  static tela2 + #1128, #2826
   static tela2 + #1129, #3967
   static tela2 + #1130, #3967
   static tela2 + #1131, #3967
@@ -4340,9 +4499,7 @@ GeradorPalavra:
   static tela2 + #1198, #2877
   static tela2 + #1199, #2877
 ;----------------------------------
-
-telainicio : var #1200
-  ;Linha 0
+;Tela menu
   telainicio : var #1200
   ;Linha 0
   static telainicio + #0, #2877
@@ -5604,6 +5761,7 @@ telainicio : var #1200
   static telainicio + #1198, #2877
   static telainicio + #1199, #2877
 ;---------------------------------
+;Tela antes do jogo
 tela3 : var #1200
   ;Linha 0
   static tela3 + #0, #2877
