@@ -2,9 +2,9 @@ jmp main
 
 ;---- Variáveis globais: podem ser usadas em todas as rotinas
 Palavra: var #20	        ;vetor para armazenar as letras da palavra
-Tecla: var #1		        ;guarda a letra que foi digitada
-Acerto: var #1		        ;contador de Acertos
-Erro: var #1		        ;contador de Erros
+Tecla: var #1		        ;guarda a tecla que foi digitada
+Acerto: var #1		        ;contador de acertos
+Erro: var #1		        ;contador de erros
 chaveRandom: var #2	     ;usada para sortear a palavra	
 TamanhoPalavra: var #1    ;guarda o tamanho da palavra
 posLetra: var #1          ;guarda a posicao da letra 
@@ -746,7 +746,7 @@ word726: string "turma"
 word727: string "turva"
 word728: string "turvo"
 word729: string "tutor"
-word730: string "vadia"
+word730: string "verme"
 word731: string "vadio"
 word732: string "vagar"
 word733: string "valer"
@@ -2382,28 +2382,26 @@ Msn4: string "TENTATIVA"
 ;------------------------------
 ;Menu principal do jogo:
 main:
-	call ApagaTela
 	call ImprimeTela ;tela do menu 
 
 	main_loop:	
 	call InputTecla 
-	loadn r0, #13 ;no caso da tecla enter ser inputada
-	load r1, Tecla
-	cmp r0, r1	
-	jeq jogo ;go to para a função do jogo 
+	loadn r0, #13  ;ASCII ENTER = 13
+	load r1, Tecla ;pega a tecla inputada
+	cmp r0, r1	   ;input == ENTER?
+	jeq jogo       ;se sim, go to para a função do jogo 
 
-   loadn r0, #'1' ;no caso da tecla 1 ser inputada
+   loadn r0, #'1'    ;no caso da tecla 1 ser inputada
    load r1, Tecla
-	cmp r0,r1
-   jeq Instrucaotela ;go to para a tela das intruções
+	cmp r0,r1         ;input == 1?
+   jeq Instrucaotela ;se sim, go to para a tela das intruções
    
-   jmp main_loop  ;digitar uma tecla inválida faz o programa continuar no loop
+   jmp main_loop     ;digitar uma tecla inválida faz o programa continuar no loop
    call ApagaTela
 	halt
 
 ;Main do jogo:
 jogo:
-   call ApagaTela
    call ImprimeTela3 ;tela para gerar a palavra
    call GeradorPalavra
 
@@ -2478,10 +2476,10 @@ ChecaPalavra:
 	rts
 ;***********************************************************************
 ; CHECA UMA LETRA COM TODA A PALAVRA CERTA E PINTA ELA COM A
-;          COR DE ACORDO COM SUA APARICAO E POSICAO
+;          COR DE ACORDO COM A SUA APARICAO E POSICAO
 ;***********************************************************************
-ChecaLetra: ; r0 =letra a ser checada com todas as outras
-	push r0
+ChecaLetra: 
+	push r0        ;r0 =letra a ser checada com todas as outras
 	push r1
 	push r2
 	push r3
@@ -2493,7 +2491,7 @@ ChecaLetra: ; r0 =letra a ser checada com todas as outras
 	load r1, Palavra 	;endereco da palavra
 	load r2, TamanhoPalavra	
 	loadn r3, #0 		;contador
-	loadn r5, #2304 ;letras que não estão na palavra(de vermelho)		
+	loadn r5, #2304   ;letras que não estão na palavra(ASCII vermelho)		
    load r7, contadorVerdes
 
 	checaLetra_Loop:
@@ -2505,20 +2503,20 @@ ChecaLetra: ; r0 =letra a ser checada com todas as outras
 	  checaLetra_Continue:
 		inc r3
 		cmp r2, r3
-		jeq checaLetra_Sai	;Caso ja tenha acabado a palavra, sai do loop
+		jeq checaLetra_Sai	;caso ja tenha acabado a palavra, sai do loop
 		jmp checaLetra_Loop
 
 
 	letraPresente:
 		load r6, posLetra
 		cmp r6, r3 			
-		jne letraAmarela  ;caso a letra esteja presente mas no lugar errado
+		jne letraAmarela  ;caso a letra esteja presente, mas no lugar errado
       inc r7
-		loadn r5, #512 	;caso a letra esteja presente e no lugar certo- cor verde
+		loadn r5, #512 	;caso a letra esteja presente e no lugar certo(ASCII verde)
 		jmp checaLetra_Sai
 
 		letraAmarela:
-			loadn r5, #2816
+			loadn r5, #2816   ;ASCII amarelo
 			jmp checaLetra_Continue
 
 
