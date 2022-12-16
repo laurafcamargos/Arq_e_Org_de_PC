@@ -119,13 +119,13 @@ word99: string "brega"
 word100: string "breve"
 word101: string "briga"
 word102: string "brisa"
-word103: string "broxa"
+word103: string "bruxa"
 word104: string "bruma"
 word105: string "bruta"
 word106: string "bruto"
 word107: string "bucho"
 word108: string "bulir"
-word109: string "bunda"
+word109: string "banco"
 word110: string "burra"
 word111: string "burro"
 word112: string "busca"
@@ -2389,12 +2389,12 @@ main:
 	loadn r0, #13  ;ASCII ENTER = 13
 	load r1, Tecla ;pega a tecla inputada
 	cmp r0, r1	   ;input == ENTER?
-	jeq jogo       ;se sim, go to para a função do jogo 
+	jeq jogo       ;se sim, go to função do jogo 
 
    loadn r0, #'1'    ;no caso da tecla 1 ser inputada
    load r1, Tecla
 	cmp r0,r1         ;input == 1?
-   jeq Instrucaotela ;se sim, go to para a tela das intruções
+   jeq Instrucaotela ;se sim, go to tela das intruções
    
    jmp main_loop     ;digitar uma tecla inválida faz o programa continuar no loop
    call ApagaTela
@@ -2403,7 +2403,7 @@ main:
 ;Main do jogo:
 jogo:
    call ImprimeTela3 ;tela para gerar a palavra
-   call GeradorPalavra
+   call GeradorPalavra 
 
 	loadn r0, #0
 	store Acerto, r0	;contador de acertos
@@ -2416,7 +2416,7 @@ jogo:
    
 	loadn r3, #40		;tamanho da linha da tela
 	loadn r4, #8		;maximo de tentativas por padrao
-	load r0, TamanhoPalavra
+	load r0, TamanhoPalavra 
 	loadn r2, #376			;traços no ponto central da tela	
 	store posCursor, r2  ;desloca o cursor na tela a cada palavra
 
@@ -2424,7 +2424,7 @@ jogo:
 	loadn r3, #40 		;tamanho da linha da tela
    
 	Loop:
-		loadn r5, #0
+		loadn r5, #0   ;contador de tracinhos verdes
 		store contadorVerdes, r5 ;contador é zerado a cada tentativa
       
       call PrintaTentativa
@@ -2437,7 +2437,7 @@ jogo:
       store Contador,r1 ;salva na variável pra usar dps 
 
 		add r2, r2, r3		;passa pra proxima linha
-		store posCursor, r2
+		store posCursor, r2 ;desloca o cursor na tela a cada palavra
 
 		cmp r1, r4 		;caso nao tenha excedido o numero de tentativas, continua
 		jne Loop
@@ -2479,7 +2479,7 @@ ChecaPalavra:
 ;          COR DE ACORDO COM A SUA APARICAO E POSICAO
 ;***********************************************************************
 ChecaLetra: 
-	push r0        ;r0 =letra a ser checada com todas as outras
+	push r0    ;r0 =letra a ser checada com todas as outras
 	push r1
 	push r2
 	push r3
@@ -2630,7 +2630,7 @@ SorteiaPalavra:
 
 	load r1, chaveRandom ;seleciona um numero entre 0 e o tamanho do catalogo
 	rotl r1, #4		 	   ;faz um rotate pra tentar deixar random
-	loadn r2, #783 		;numero de palavras no catalogo (ATUALIZAR CASO ADICIONE MAIS)
+	loadn r2, #783 		;numero de palavras no catalogo (tem que mudar caso add mais palavra)
 	mod r2, r1, r2 		;r1 = chaveRandom % r2=numCatalogo (um numero random)
 
 	loadn r3, #2         ;tamanho de um endereco de memoria 			
