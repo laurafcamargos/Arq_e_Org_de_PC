@@ -2412,7 +2412,7 @@ jogo:
    call ApagaTela
    call SorteiaPalavra 
    
-   ;--calcula a posicao com base na palavra sorteada
+   ;calcula a posicao com base na palavra sorteada
    
 	loadn r3, #40		;tamanho da linha da tela
 	loadn r4, #8		;maximo de tentativas por padrao
@@ -3213,7 +3213,7 @@ PrintaTentativa:
 		loadn r0, #223    ;posicao da tela onde é impresso
 		loadn r1, #'7'    ;caracter impresso
 	   loadn r2, #3328   ;cor rosa
-	   add r1,r1,r2      ;colore o caracter
+	   add r1,r1,r2main      ;colore o caracter
 		outchar r1, r0    ;imprime o caracter r1 na posicao r0
 	   loadn r0, #213
 		loadn r1, #Msn4
